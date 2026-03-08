@@ -25,3 +25,10 @@ The contact form posts to `VITE_CONTACT_FORM_ENDPOINT`.
 3. Redeploy the site.
 
 For local testing, copy `.env.example` to `.env` and set your endpoint value.
+
+## Resume download setup
+
+The download button points to `/resume.pdf`.
+
+1. Put your resume file at `public/resume.pdf`.
+2. The site will serve it at `/resume.pdf` and the button will download it.

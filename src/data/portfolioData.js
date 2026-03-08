@@ -4,7 +4,7 @@ export const profile = {
   tagline: "I build scalable software systems with clean architecture and robust backend services.",
   location: "Pune, India",
   email: "yrajesh0127@gmail.com",
-  resumeLink: "#",
+  resumeLink: "/Rajesh_Yadav_Resume.pdf",
   social: [
     { name: "GitHub", link: "https://github.com/yadav-rajesh" },
     { name: "LinkedIn", link: "https://www.linkedin.com/in/rajesh-yadav-j2ee/" },

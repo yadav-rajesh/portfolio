@@ -11,7 +11,7 @@ export default function Hero({ profile }) {
           <a className="btn btn-primary" href="#projects">
             View Projects
           </a>
-          <a className="btn btn-ghost" href={profile.resumeLink}>
+          <a className="btn btn-ghost" href={profile.resumeLink} download>
             Download Resume
           </a>
         </div>

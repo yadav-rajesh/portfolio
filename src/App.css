@@ -44,7 +44,10 @@ body {
   position: relative;
   width: 100%;
   margin: 0 auto;
+  min-height: 100vh;
+  min-height: 100dvh;
   height: 100vh;
+  height: 100dvh;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -927,6 +930,43 @@ main > .section-reveal:nth-of-type(7) {
 }
 
 @media (max-width: 720px) {
+  main {
+    scroll-snap-type: none;
+    overflow-y: visible;
+    min-height: auto;
+  }
+
+  .site-shell {
+    overflow: visible;
+    height: auto;
+    min-height: 100dvh;
+  }
+
+  .topbar,
+  .footer,
+  .section-pad {
+    width: min(1120px, 94%);
+  }
+
+  .topbar {
+    top: 0.6rem;
+    padding: 0.65rem 0.8rem;
+  }
+
+  .brand {
+    max-width: calc(100% - 56px);
+    font-size: 0.8rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .brand-mark {
+    width: 24px;
+    height: 24px;
+    font-size: 0.6rem;
+  }
+
   .menu-toggle {
     display: block;
   }
@@ -935,7 +975,7 @@ main > .section-reveal:nth-of-type(7) {
     position: absolute;
     top: calc(100% + 0.5rem);
     right: 0;
-    width: 210px;
+    width: min(260px, calc(100vw - 2rem));
     padding: 0.7rem;
     border: 1px solid var(--panel-border);
     border-radius: 12px;
@@ -956,8 +996,47 @@ main > .section-reveal:nth-of-type(7) {
     grid-template-columns: 1fr;
   }
 
+  .hero {
+    gap: 0.9rem;
+  }
+
+  .hero-visual {
+    min-height: 210px;
+  }
+
+  .hero-logo-pulse {
+    width: 165px;
+    height: 165px;
+  }
+
+  .hero-logo {
+    width: 130px;
+    height: 130px;
+  }
+
+  .hero-logo span {
+    font-size: 1.9rem;
+  }
+
+  .chip-one,
+  .chip-two {
+    display: none;
+  }
 
   .section-pad {
-    padding-top: 3rem;
+    min-height: auto;
+    scroll-snap-align: none;
+    scroll-snap-stop: normal;
+    padding-top: 2.6rem;
+    padding-bottom: 1.4rem;
+  }
+
+  .footer {
+    margin-top: 1.2rem;
+    padding-bottom: 1.1rem;
+  }
+
+  .footer-socials {
+    display: none;
   }
 }
