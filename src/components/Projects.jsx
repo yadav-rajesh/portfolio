@@ -1,4 +1,14 @@
 export default function Projects({ projects }) {
+  const getLiveLink = (project) => {
+    const liveLink = project.live?.trim();
+
+    if (!liveLink || liveLink === "#") {
+      return `/project-unavailable.html?project=${encodeURIComponent(project.name)}`;
+    }
+
+    return liveLink;
+  };
+
   return (
     <section id="projects" className="section-pad section-reveal">
       <h3 className="section-title">Projects</h3>
@@ -15,7 +25,7 @@ export default function Projects({ projects }) {
               ))}
             </div>
             <div className="link-row">
-              <a href={project.live} target="_blank" rel="noreferrer">
+              <a href={getLiveLink(project)} target="_blank" rel="noreferrer">
                 Live
               </a>
               <a href={project.code} target="_blank" rel="noreferrer">
