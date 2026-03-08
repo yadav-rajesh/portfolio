@@ -24,11 +24,11 @@ export default function Projects({ projects }) {
                 </span>
               ))}
             </div>
-            <div className="link-row">
-              <a href={getLiveLink(project)} target="_blank" rel="noreferrer">
+            <div className="link-row project-actions">
+              <a className="project-action-link" href={getLiveLink(project)} target="_blank" rel="noreferrer">
                 Live
               </a>
-              <a href={project.code} target="_blank" rel="noreferrer">
+              <a className="project-action-link" href={project.code} target="_blank" rel="noreferrer">
                 Code
               </a>
             </div>
