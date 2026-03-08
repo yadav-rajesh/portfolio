@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 const initialFormState = { name: "", email: "", message: "" };
+const contactEndpoint = import.meta.env.VITE_CONTACT_FORM_ENDPOINT;
 
 function SocialIcon({ name }) {
   const key = name.toLowerCase();
@@ -40,7 +41,9 @@ function SocialIcon({ name }) {
 export default function Contact({ profile }) {
   const [formData, setFormData] = useState(initialFormState);
   const [errors, setErrors] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState("");
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -74,16 +77,45 @@ export default function Contact({ profile }) {
     return Object.keys(nextErrors).length === 0;
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     setSubmitted(false);
+    setSubmitError("");
 
     if (!validate()) {
       return;
     }
 
-    setSubmitted(true);
-    setFormData(initialFormState);
+    if (!contactEndpoint) {
+      setSubmitError(
+        "Contact form endpoint is not configured. Add VITE_CONTACT_FORM_ENDPOINT in your deployment environment."
+      );
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch(contactEndpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to submit form");
+      }
+
+      setSubmitted(true);
+      setFormData(initialFormState);
+    } catch {
+      setSubmitError("Could not send your message. Please try again in a moment.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -118,6 +150,7 @@ export default function Contact({ profile }) {
             name="name"
             value={formData.name}
             onChange={handleChange}
+            disabled={isSubmitting}
             placeholder="Your full name"
           />
           {errors.name ? <span className="field-error">{errors.name}</span> : null}
@@ -125,9 +158,11 @@ export default function Contact({ profile }) {
           <label htmlFor="email">Email</label>
           <input
             id="email"
+            type="email"
             name="email"
             value={formData.email}
             onChange={handleChange}
+            disabled={isSubmitting}
             placeholder="you@example.com"
           />
           {errors.email ? <span className="field-error">{errors.email}</span> : null}
@@ -139,20 +174,20 @@ export default function Contact({ profile }) {
             rows="3"
             value={formData.message}
             onChange={handleChange}
+            disabled={isSubmitting}
             placeholder="Tell me about your project"
           />
           {errors.message ? <span className="field-error">{errors.message}</span> : null}
 
-          <button type="submit" className="btn btn-primary">
-            Send Message
+          <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
+            {isSubmitting ? "Sending..." : "Send Message"}
           </button>
 
           {submitted ? (
-            <p className="submit-note">
-              Thanks. Your message has been validated locally. Connect a backend/API to make it
-              production-ready.
-            </p>
+            <p className="submit-note">Thanks. Your message has been sent successfully.</p>
           ) : null}
+
+          {submitError ? <p className="submit-note field-error">{submitError}</p> : null}
         </form>
       </div>
     </section>
